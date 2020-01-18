@@ -1,1 +1,1 @@
-Backend for [snappy.pictures](snappy.pictures
+Backend for [snappy.pictures](snappy.pictures)
