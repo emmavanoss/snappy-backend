@@ -1,0 +1,19 @@
+{
+  "name": "SnappyPictures",
+  "version": "1.0.0",
+  "description": "Backend for https://snappy.pictures",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/emmavanoss/SnappyPictures.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/emmavanoss/snappyPictures/issues"
+  },
+  "homepage": "https://github.com/emmavanoss/snappyPictures#readme"
+}
