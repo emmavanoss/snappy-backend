@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/emmavanoss/snappyPictures/issues"
   },
-  "homepage": "https://github.com/emmavanoss/snappyPictures#readme"
+  "homepage": "https://github.com/emmavanoss/snappyPictures#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
 }
