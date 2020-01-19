@@ -1,6 +1,7 @@
 const express = require('express')
 const app = express()
 const port = process.env.PORT || 5000
+const getRandomBoard = require('./getRandomBoard')
 
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "https://snappy.pictures");
@@ -8,8 +9,10 @@ app.use((req, res, next) => {
   next();
 });
 
-app.get('/api/hello-world', (req, res) => {
-  res.send('Hello, World');
+app.use(express.static('boards'))
+
+app.get('/api/board', (req, res) => {
+  res.send(getRandomBoard());
 })
 
 app.listen(port, () => {
