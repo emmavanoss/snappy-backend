@@ -1,26 +1,10 @@
 const DIMENSION = 4
 
 const shuffleTiles = board => {
-
-  const squares = new Array(DIMENSION);
-  for (let i = 0; i < DIMENSION; i++) {
-    squares[i] = new Array(DIMENSION);
-  }
-
-  let tileNumber = 0
-
-  for (let i = 0; i < DIMENSION; i++) {
-    for (let j = 0; j < DIMENSION; j++) {
-      squares[i][j] = board.tilePaths[tileNumber]
-      tileNumber++
-    }
-  }
-  squares[DIMENSION-1][DIMENSION-1] = null;
-
-  board.tilePaths = squares;
+  const shuffleAmount = Math.floor(Math.random() * 10000) + 1000
 
   const findSpace = (rowIndex, colIndex) => {
-    const squares = board.tilePaths.slice();
+    const squares = board.tiles.slice();
     const toCheck = [
       [rowIndex, colIndex - 1],
       [rowIndex, colIndex + 1],
@@ -46,46 +30,25 @@ const shuffleTiles = board => {
   }
 
   const swapSquares = (coordsA, coordsB) => {
-    const squares = board.tilePaths.slice();
+    const squares = board.tiles.slice();
     const valueA = squares[coordsA[0]][coordsA[1]]
     const valueB = squares[coordsB[0]][coordsB[1]]
     squares[coordsA[0]][coordsA[1]] = valueB
     squares[coordsB[0]][coordsB[1]] = valueA
-    board.tilePaths = squares
+    board.tiles = squares
   }
 
-  const handleSquareClick = (rowIndex, colIndex) => {
+  for (let i = 0; i < shuffleAmount; i++) {
+    const rowIndex = Math.floor(Math.random() * DIMENSION)
+    const colIndex = Math.floor(Math.random() * DIMENSION)
     const coordsBlank = findSpace(rowIndex, colIndex);
-    if (coordsBlank === null) return;
-    const coordsClick = [rowIndex, colIndex]
-    swapSquares(coordsClick, coordsBlank)
-  }
 
-  const shuffle = () => {
-    const shuffleAmount = Math.floor(Math.random() * 10000) + 1000
-    for (let i = 0; i < shuffleAmount; i++) {
-      const a = Math.floor(Math.random() * DIMENSION)
-      const b = Math.floor(Math.random() * DIMENSION)
-      handleSquareClick(a, b)
+    if (coordsBlank !== null) {
+      swapSquares([rowIndex, colIndex], coordsBlank);
     }
   }
-
-  shuffle()
 
   return board
 }
 
 module.exports = shuffleTiles;
-
-// board data structure
-// {
-// category: ''
-// boardName: ''
-// tilePaths: ['a/a/a', 'a/a/b', ...]
-// }
-//
-//
-//
-
-
-
