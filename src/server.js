@@ -10,7 +10,7 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use(express.static('boards'))
+app.use(express.static('../assets/boards'))
 
 app.get('/api/board', (req, res) => {
   res.send(shuffle(randomBoard()));
