@@ -1,3 +1,4 @@
+const path = require('path')
 const express = require('express')
 const app = express()
 const port = process.env.PORT || 5000
@@ -10,7 +11,7 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use(express.static('../assets/boards'))
+app.use(express.static(path.join(__dirname, '..', 'assets', 'boards')))
 
 app.get('/api/board', (req, res) => {
   res.send(shuffle(randomBoard()));
