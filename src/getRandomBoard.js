@@ -2,28 +2,29 @@ const fs = require('fs')
 const path = require('path')
 
 const DIMENSION = 4
+const BOARDS_PATH = path.join(__dirname, '..', 'assets', 'boards')
 
 const getDirectoryNames = pathToScan => {
   return fs
-    .readdirSync(path.join(__dirname, pathToScan), {withFileTypes: true})
+    .readdirSync(pathToScan, {withFileTypes: true})
     .filter(dirent => dirent.isDirectory())
     .map(dirent => dirent.name)
 }
 
 const getTiles = pathToScan => {
   return fs
-    .readdirSync(path.join(__dirname, pathToScan))
+    .readdirSync(pathToScan)
     .filter(file => file.startsWith('tile'))
     .sort()
 }
 
 const boards = {}
 
-for (const category of getDirectoryNames('boards')) {
-  const categoryBoards = getDirectoryNames(path.join('boards', category))
+for (const category of getDirectoryNames(BOARDS_PATH)) {
+  const categoryBoards = getDirectoryNames(path.join(BOARDS_PATH, category))
   boards[category] = { }
   for (const board of categoryBoards) {
-    boards[category][board] = getTiles(path.join('boards', category, board))
+    boards[category][board] = getTiles(path.join(BOARDS_PATH, category, board))
   }
 }
 
