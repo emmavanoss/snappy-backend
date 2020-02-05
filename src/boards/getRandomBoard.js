@@ -2,7 +2,7 @@ const fs = require('fs')
 const path = require('path')
 
 const DIMENSION = 4
-const BOARDS_PATH = path.join(__dirname, '..', 'assets', 'boards')
+const BOARDS_PATH = path.join(__dirname, '..', '..', 'assets', 'boards')
 
 const getDirectoryNames = pathToScan => {
   return fs
