@@ -14,7 +14,11 @@ app.use((req, res, next) => {
 app.use(express.static(path.join(__dirname, '..', 'assets', 'boards')))
 
 app.get('/api/board', (req, res) => {
-  res.send(boards.shuffle(boards.randomBoard()));
+  res.send(shuffle(randomBoard()));
+})
+
+app.post('/api/validate', (req, res) => {
+  res.send(true);
 })
 
 app.listen(port, () => {
