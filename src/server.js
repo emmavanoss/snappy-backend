@@ -1,9 +1,7 @@
 const path = require('path')
 const express = require('express')
 const app = express()
-const boards = require('./boards')
-// const randomBoard = require('./getRandomBoard')
-// const shuffle = require('./shuffle')
+const { shuffle, randomBoard } = require('./boards')
 
 const port = process.env.PORT || 5000
 
