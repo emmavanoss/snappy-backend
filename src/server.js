@@ -21,8 +21,7 @@ app.get('/api/board', (req, res) => {
 })
 
 app.post('/api/validate', (req, res) => {
-  console.log(req.body)
-  res.send(true);
+  res.send(validate(req.body))
 })
 
 app.listen(port, () => {
