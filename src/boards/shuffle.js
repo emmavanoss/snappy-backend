@@ -3,6 +3,7 @@ const DIMENSION = 4
 const shuffleTiles = board => {
 
   const shuffleAmount = Math.floor(Math.random() * 10000) + 1000
+  // const shuffleAmount = 7
 
   const findSpace = (rowIndex, colIndex) => {
     const squares = board.tiles.slice();

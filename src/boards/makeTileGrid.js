@@ -1,8 +1,6 @@
 const path = require('path')
 
-const DIMENSION = 4
-
-const makeTileGrid = (category, boardName, boards) => {
+const makeTileGrid = (category, boardName, boards, DIMENSION) => {
   // generate tile src paths
   const tiles = boards[category][boardName]
   const paths = tiles.map(tileName => path.join(category, boardName, tileName))
