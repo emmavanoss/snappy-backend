@@ -63,7 +63,6 @@ const getRandomBoard = () => {
     category: category,
     boardName: boardName,
     tiles: makeTileGrid(category, boardName),
-    solution: makeTileGrid(category, boardName)
   }
 }
 
