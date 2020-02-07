@@ -1,4 +1,5 @@
 const path = require('path')
+const bodyParser = require('body-parser')
 const express = require('express')
 const app = express()
 const { shuffle, randomBoard } = require('./boards')
@@ -13,11 +14,14 @@ app.use((req, res, next) => {
 
 app.use(express.static(path.join(__dirname, '..', 'assets', 'boards')))
 
+app.use(bodyParser.json())
+
 app.get('/api/board', (req, res) => {
   res.send(shuffle(randomBoard()));
 })
 
 app.post('/api/validate', (req, res) => {
+  console.log(req.body)
   res.send(true);
 })
 
