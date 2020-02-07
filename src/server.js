@@ -1,9 +1,10 @@
-const path = require('path')
 const bodyParser = require('body-parser')
 const express = require('express')
-const app = express()
+const path = require('path')
+
 const { randomBoard, shuffle, validate } = require('./boards')
 
+const app = express()
 const port = process.env.PORT || 5000
 
 app.use((req, res, next) => {
