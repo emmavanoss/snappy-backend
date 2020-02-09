@@ -21,9 +21,9 @@ app.get('/api/board', (req, res) => {
   res.send(shuffle(randomBoard()));
 })
 
-app.post('/api/validate', (req, res) => {
-  res.send(validate(req.body))
-})
+// app.post('/api/validate', (req, res) => {
+  // res.send(validate(req.body))
+// })
 
 const server = app.listen(PORT, () => console.log(`Listening on ${PORT}`));
 
@@ -34,10 +34,9 @@ wss.on('connection', (ws) => {
   console.log('Client connected');
 
   ws.on('message', function incoming(message) {
-    console.log('received: %s', message);
+    const validState = validate(JSON.parse(message));
+    ws.send(JSON.stringify(validState))
   });
-
-  ws.send('something');
 
   ws.on('close', () => console.log('Client disconnected'));
 });
