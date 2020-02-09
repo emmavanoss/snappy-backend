@@ -21,10 +21,6 @@ app.get('/api/board', (req, res) => {
   res.send(shuffle(randomBoard()));
 })
 
-// app.post('/api/validate', (req, res) => {
-  // res.send(validate(req.body))
-// })
-
 const server = app.listen(PORT, () => console.log(`Listening on ${PORT}`));
 
 // websocket server
