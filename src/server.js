@@ -1,31 +1,38 @@
 const bodyParser = require('body-parser')
 const express = require('express')
 const path = require('path')
+const { Server } = require('ws');
 
 const { randomBoard, shuffle, validate } = require('./boards')
 
+const PORT = process.env.PORT || 5000;
+
+// express server
 const app = express()
-const port = process.env.PORT || 5000
-
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "https://snappy.pictures");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  next();
-});
-
-app.use(express.static(path.join(__dirname, '..', 'assets', 'boards')))
-
-app.use(bodyParser.json())
+  .use((req, res, next) => {
+    res.header("Access-Control-Allow-Origin", "https://snappy.pictures");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+  })
+  .use(express.static(path.join(__dirname, '..', 'assets', 'boards')))
+  .use(bodyParser.json())
 
 app.get('/api/board', (req, res) => {
   res.send(shuffle(randomBoard()));
 })
 
-app.post('/api/validate', (req, res) => {
-  res.send(validate(req.body))
-})
+const server = app.listen(PORT, () => console.log(`Listening on ${PORT}`));
 
-app.listen(port, () => {
-  console.log(`Listening at port ${port}`);
-})
+// websocket server
+const wss = new Server({ server });
 
+wss.on('connection', (ws) => {
+  console.log('Client connected');
+
+  ws.on('message', function incoming(message) {
+    const validState = validate(JSON.parse(message));
+    ws.send(JSON.stringify(validState))
+  });
+
+  ws.on('close', () => console.log('Client disconnected'));
+});
