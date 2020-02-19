@@ -24,9 +24,9 @@ describe('boards', () => {
       grid = makeTileGrid('cats', 'grey', boards, 4)
     })
 
-    it('returns a 4 x 4 grid when dimension is 4', () => {
-      expect(grid.length).toEqual(4)
-      expect(grid[0].length).toEqual(4)
+    it('returns a 2D grid the size of the dimension', () => {
+      expect(grid.length).toEqual(DIMENSION)
+      expect(grid[0].length).toEqual(DIMENSION)
     });
 
     it('returns image srcs in the grid', () => {
@@ -36,6 +36,10 @@ describe('boards', () => {
       const tilePath1 = path.join('cats', 'grey', tileName1)
       expect(grid[0][0]).toEqual(tilePath0)
       expect(grid[0][1]).toEqual(tilePath1)
+    });
+
+    it('returns null for the final square in the grid', () => {
+      expect(grid[DIMENSION - 1][DIMENSION - 1]).toEqual(null)
     });
   });
 });
