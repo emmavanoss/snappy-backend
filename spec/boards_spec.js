@@ -16,4 +16,11 @@ describe('boards', () => {
       expect(board.boardName).toEqual('grey')
     });
   });
+
+  describe('makeTileGrid', () => {
+    it('returns a 4 x 4 grid when dimension is 4', () => {
+      expect(makeTileGrid('cats', 'grey', boards, 4).length).toEqual(4)
+      expect(makeTileGrid('cats', 'grey', boards, 4)[0].length).toEqual(4)
+    });
+  });
 });
