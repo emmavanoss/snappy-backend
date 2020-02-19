@@ -28,5 +28,14 @@ describe('boards', () => {
       expect(grid.length).toEqual(4)
       expect(grid[0].length).toEqual(4)
     });
+
+    it('returns image srcs in the grid', () => {
+      const tileName0 = boards['cats']['grey'][0]
+      const tileName1 = boards['cats']['grey'][1]
+      const tilePath0 = path.join('cats', 'grey', tileName0)
+      const tilePath1 = path.join('cats', 'grey', tileName1)
+      expect(grid[0][0]).toEqual(tilePath0)
+      expect(grid[0][1]).toEqual(tilePath1)
+    });
   });
 });
