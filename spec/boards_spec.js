@@ -18,9 +18,15 @@ describe('boards', () => {
   });
 
   describe('makeTileGrid', () => {
+    let grid
+
+    beforeEach(() => {
+      grid = makeTileGrid('cats', 'grey', boards, 4)
+    })
+
     it('returns a 4 x 4 grid when dimension is 4', () => {
-      expect(makeTileGrid('cats', 'grey', boards, 4).length).toEqual(4)
-      expect(makeTileGrid('cats', 'grey', boards, 4)[0].length).toEqual(4)
+      expect(grid.length).toEqual(4)
+      expect(grid[0].length).toEqual(4)
     });
   });
 });
