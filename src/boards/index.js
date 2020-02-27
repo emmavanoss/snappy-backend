@@ -14,7 +14,7 @@ const randomBoard = () => {
   return {
     category: category,
     boardName: boardName,
-    tiles: makeTileGrid(category, boardName, boards, DIMENSION)
+    tiles: makeTileGrid(category, boardName, boards, DIMENSION),
   }
 }
 
