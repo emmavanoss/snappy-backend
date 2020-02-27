@@ -2,10 +2,12 @@ const bodyParser = require('body-parser')
 const express = require('express')
 const path = require('path')
 const { Server } = require('ws');
+const { uuid } = require('uuidv4');
 
 const { randomBoard, shuffle, validate } = require('./boards')
 
 const PORT = process.env.PORT || 5000;
+const games = {};
 
 // express server
 const app = express()
@@ -17,9 +19,26 @@ const app = express()
   .use(express.static(path.join(__dirname, '..', 'assets', 'boards')))
   .use(bodyParser.json())
 
-app.get('/api/board', (req, res) => {
-  res.send(shuffle(randomBoard()));
-})
+app.get('/api/new-game', (req, res) => {
+  const board = shuffle(randomBoard());
+  const gameID = uuid();
+  games[gameID] = board;
+  res.send({ gameID: gameID });
+});
+
+app.get('/api/board/:id', (req, res) => {
+  const id = req.params.id;
+  const board = games[id];
+  if (board) {
+    console.log(`id requested: ${id}`);
+    res.send(board);
+  } else {
+    res.send(404).send({
+      success: 'false',
+      message: 'board not found'
+    });
+  }
+});
 
 const server = app.listen(PORT, () => console.log(`Listening on ${PORT}`));
 
