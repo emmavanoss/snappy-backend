@@ -34,16 +34,17 @@ app.get('/api/new-game', (req, res) => {
   res.send({ gameId: gameId });
 });
 
-app.get('/api/board/:id', (req, res) => {
-  const id = req.params.id;
-  const board = games[id].initialBoard;
-  if (board) {
-    console.log(`id requested: ${id}`);
+app.get('/api/board/:gameId/:userId', (req, res) => {
+  const { gameId, userId } = req.params;
+  const game = games[gameId];
+
+  if (game) {
+    const board = game.userStates[userId] || game.initialBoard;
     res.send(board);
   } else {
     res.status(404).json({
-      success: 'false',
-      message: 'board not found'
+      success: false,
+      message: 'game not found'
     });
   }
 });
