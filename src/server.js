@@ -2,12 +2,17 @@ const bodyParser = require('body-parser')
 const express = require('express')
 const path = require('path')
 const { Server } = require('ws');
-const { uuid } = require('uuidv4');
+const { v4: uuidv4 } = require('uuid');
 
 const { randomBoard, shuffle, validate } = require('./boards')
 
 const PORT = process.env.PORT || 5000;
 const games = {};
+
+const updateGameForUser = (gameId, userId, boardState) => {
+  // TODO if gameId doesn't exist
+  games[gameId].userStates[userId] = boardState;
+}
 
 // express server
 const app = express()
@@ -21,19 +26,22 @@ const app = express()
 
 app.get('/api/new-game', (req, res) => {
   const board = shuffle(randomBoard());
-  const gameID = uuid();
-  games[gameID] = board;
-  res.send({ gameID: gameID });
+  const gameId = uuidv4();
+  games[gameId] = {
+    initialBoard: board,
+    userStates: {},
+  };
+  res.send({ gameId: gameId });
 });
 
 app.get('/api/board/:id', (req, res) => {
   const id = req.params.id;
-  const board = games[id];
+  const board = games[id].initialBoard;
   if (board) {
     console.log(`id requested: ${id}`);
     res.send(board);
   } else {
-    res.send(404).send({
+    res.status(404).json({
       success: 'false',
       message: 'board not found'
     });
@@ -49,7 +57,9 @@ wss.on('connection', (ws) => {
   console.log('Client connected');
 
   ws.on('message', function incoming(message) {
-    const validState = validate(JSON.parse(message));
+    const payload = JSON.parse(message);
+    updateGameForUser(payload.data.gameId, payload.userId, payload.data.board);
+    const validState = validate(payload.data.board);
     ws.send(JSON.stringify(validState))
   });
 
